@@ -1,0 +1,47 @@
+# Render Blueprint - deploys the web service + a free PostgreSQL database.
+# In Render: New -> Blueprint -> pick this repo, and Render reads this file.
+services:
+  - type: web
+    name: spring-boot-ecom
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Ecommerce_Store/Dockerfile
+    dockerContext: ./Ecommerce_Store
+    healthCheckPath: /
+    autoDeploy: true
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: cloud
+      - key: DB_HOST
+        fromDatabase:
+          name: ecom-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: ecom-db
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: ecom-db
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: ecom-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: ecom-db
+          property: password
+      # Set these in the Render dashboard when prompted (they are secrets)
+      - key: RAZORPAY_KEY_SECRET
+        sync: false
+      - key: MAIL_USERNAME
+        sync: false
+      - key: MAIL_PASSWORD
+        sync: false
+
+databases:
+  - name: ecom-db
+    plan: free
+    databaseName: ecommerce_store
+    user: ecom_user

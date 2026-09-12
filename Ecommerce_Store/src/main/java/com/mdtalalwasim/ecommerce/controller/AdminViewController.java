@@ -324,6 +324,24 @@ public class AdminViewController {
 	}
 	
 
+	//get all admin users
+	@GetMapping("/get-all-admins")
+	public String getAllAdmin(Model model) {
+		
+		List<User> allAdminUsers = userService.getAllUsersByRole("ROLE_ADMIN");
+		for (User user : allAdminUsers) {
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+			String format = formatter.format(user.getCreatedAt());
+			model.addAttribute("formattedDateTimeCreatedAt",format);
+			
+		}
+		model.addAttribute("allAdminUsers",allAdminUsers);
+		
+		return "/admin/users/admin-home";
+		
+	}
+
+
 	@GetMapping("/edit-user-status")
 	public String editUser(@RequestParam("status") Boolean status, @RequestParam("id") Long id, Model model, HttpSession session) {
 		Boolean updateUserStatus = userService.updateUserStatus(status,id);

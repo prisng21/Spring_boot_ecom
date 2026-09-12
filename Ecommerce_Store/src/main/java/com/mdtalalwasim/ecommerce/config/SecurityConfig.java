@@ -23,6 +23,10 @@ public class SecurityConfig {
 	@Lazy
 	AuthenticationFailureHandler authenticationFailureHandler;
 	
+	@Autowired
+	@Lazy
+	AuthenticationFailureHandler adminAuthenticationFailureHandler;
+	
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
@@ -43,12 +47,29 @@ public class SecurityConfig {
 		
 	}
 	
-	//which role can get which access:
+	//Admin login chain : separate dark login page (/admin-login) with its own processing URL
+	@Bean
+	public SecurityFilterChain adminFilterChain(HttpSecurity http) throws Exception {
+		http.securityMatcher("/admin/**", "/admin-login", "/admin-login-process", "/admin-logout")
+		.csrf(csrf -> csrf.disable())
+		.cors(cors->cors.disable())
+		.authorizeHttpRequests(req-> req.requestMatchers("/admin-login", "/admin-logout").permitAll()
+				.requestMatchers("/admin/**").hasRole("ADMIN"))
+		.formLogin(form-> form.loginPage("/admin-login")
+				.loginProcessingUrl("/admin-login-process")
+				.failureHandler(adminAuthenticationFailureHandler)
+				.successHandler(authenticationSuccessHandler))
+		.logout(logout->logout.logoutUrl("/admin-logout").logoutSuccessUrl("/admin-login?logout").permitAll());
+		return http.build();
+		
+	}
+	
+	//which role can get which access : default chain for storefront/user
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.csrf(csrf -> csrf.disable())
 		.cors(cors->cors.disable())
-		.authorizeHttpRequests(req-> req.requestMatchers("/user/**").hasRole("USER")
+		.authorizeHttpRequests(req-> req.requestMatchers("/user/**").hasAnyRole("USER", "ADMIN")
 		.requestMatchers("/admin/**").hasRole("ADMIN")
 		.requestMatchers("/**").permitAll())
 		.formLogin(form-> form.loginPage("/signin")
@@ -58,7 +79,7 @@ public class SecurityConfig {
 				.failureHandler(authenticationFailureHandler)
 				.successHandler(authenticationSuccessHandler))
 				
-		.logout(logout->logout.permitAll());
+		.logout(logout->logout.logoutSuccessUrl("/signin?logout").permitAll());
 		return http.build();
 		
 	}

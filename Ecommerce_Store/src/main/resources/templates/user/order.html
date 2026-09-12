@@ -12,7 +12,7 @@
 				<div class="col-md-6">
 				<p class="fs-4 text-center">Please Fill Up</p>
 				<hr>
-				<form action="">
+				<form action="/user/create-order" method="post" id="checkoutForm">
 					<div class="mb-5 row">
 						<div class="col">
 							<input type="text" name="firstName" placeholder="First Name" class="form-control">
@@ -45,10 +45,19 @@
 							<input type="text" name="state" placeholder="State" class="form-control">
 						</div>
 						<div class="col">
-							<input type="number" name="pincode" placeholder="PIN Code" class="form-control">
+							<input type="number" name="pinCode" placeholder="PIN Code" class="form-control" required>
 						</div>
 					</div>
+					<div class="mb-3">
+						<label class="form-label">Select Payment Type</label>
+						<select class="form-control" name="paymentType" required>
+							<option value="">---Select---</option>
+							<option value="Cash On Delivery">Cash On Delivery</option>
+							<option value="Online Payment">Online Payment (Razorpay)</option>
+						</select>
+					</div>
 					
+					<button type="submit" class="btn bg-danger text-white col-md-12">Place Order</button>
 				</form>
 			</div>
 			<div class="col-md-6">
@@ -87,26 +96,11 @@
 				
 				<div class="card shadow p-3 mb-5 bg-body rounded">
 						
-						<div class="card-body">
-						<form action="/login" method="post">
-							<div class="mb-3">
-								<label class="form-label">Select Payment Type</label> 
-								<select class="form-control">
-									<option>---Select---</option>
-									<option>Cash On Delivery</option>
-									<option>Online Payment</option>
-								</select>
-							</div>
-							
-							<button type="submit" class="btn bg-danger text-white col-md-12">Place Order</button>
-						</form>
-
-						
-					</div>
-					<div class="card-footer text-center">
-						<a href="/forgot-password" class="text-decoration-none">Forgot Password ?</a><br>Don't have an account?
-						<a href="/register" class="text-decoration-none"> Create One</a>
-					</div>
+						<div class="card-body text-center">
+							<span class="text-muted">Payments are secured by
+								<span class="fw-bold text-primary">Razorpay</span> (Test Mode)
+							</span>
+						</div>
 				</div>
 			</div>
 			</div>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin Login | RED WINGS Clothing</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+	crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+	integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style type="text/css">
+body {
+	background: linear-gradient(135deg, #1b1f2b 0%, #2a3040 100%);
+	min-height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.admin-login-card {
+	max-width: 430px;
+	width: 100%;
+	border: none;
+	border-radius: 14px;
+	overflow: hidden;
+}
+
+.admin-login-card .card-header {
+	background-color: #1b1f2b;
+	color: #ffffff;
+}
+
+.admin-login-card .brand i {
+	color: #DC3545;
+}
+</style>
+</head>
+<body>
+	<div class="card admin-login-card shadow-lg">
+		<div class="card-header text-center py-3">
+			<h4 class="mb-0"><i class="fa-solid fa-user-shield brand-icon text-danger"></i> RED WINGS <span class="text-danger">ADMIN</span></h4>
+		</div>
+		<div class="card-body p-4">
+
+			<!-- Logout and Signin Error Alert -->
+			<div th:if="${param.error}" class="alert alert-danger text-center py-2">[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]</div>
+			<div th:if="${param.logout}" class="alert alert-success text-center py-2">Logout Successfully.</div>
+
+			<form action="/admin-login-process" method="post">
+				<div class="mb-3">
+					<label class="form-label">Email</label>
+					<input class="form-control" name="username" type="email" placeholder="admin@example.com" required />
+				</div>
+				<div class="mb-3">
+					<label class="form-label">Password</label>
+					<input class="form-control" name="password" type="password" placeholder="Enter your password" required />
+				</div>
+				<button type="submit" class="btn btn-danger col-12 mt-2">
+					<i class="fa-solid fa-right-to-bracket me-1"></i> Admin Sign In
+				</button>
+			</form>
+		</div>
+		<div class="card-footer text-center bg-white">
+			<small><a href="/" class="text-decoration-none"><i class="fa-solid fa-store me-1"></i>Back to Store</a></small>
+		</div>
+	</div>
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+		crossorigin="anonymous"></script>
+</body>
+</html>

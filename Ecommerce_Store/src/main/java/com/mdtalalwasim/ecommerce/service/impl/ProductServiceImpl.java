@@ -76,7 +76,6 @@ public class ProductServiceImpl implements ProductService{
 		dbProductById.setProductCategory(product.getProductCategory());
 		dbProductById.setProductPrice(product.getProductPrice());
 		dbProductById.setProductStock(product.getProductStock());
-		dbProductById.setCreatedAt(product.getCreatedAt());
 		dbProductById.setIsActive(product.getIsActive());
 		//discount logic
 		dbProductById.setDiscount(product.getDiscount());
@@ -84,26 +83,24 @@ public class ProductServiceImpl implements ProductService{
 		Double discountPrice= product.getProductPrice() - discount;
 		dbProductById.setDiscountPrice(discountPrice);
 		
-		Product updatedProduct = productRepository.save(dbProductById);
-		
-		//product save then we need to save our new updated image
-		if(!ObjectUtils.isEmpty(updatedProduct)) {
-			if(!file.isEmpty()) {
-				try {
-					
-					File savefile = new ClassPathResource("static/img").getFile();
-					Path path = Paths.get(savefile.getAbsolutePath()+File.separator+"product_image"+File.separator+file.getOriginalFilename());
-					System.out.println("File save Path :"+path);
-					Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-					
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+		//save the uploaded image to disk FIRST, so a failed copy never leaves the
+		//database pointing at an image file that does not exist (broken image)
+		if(!file.isEmpty()) {
+			try {
+				
+				File savefile = new ClassPathResource("static/img").getFile();
+				Path path = Paths.get(savefile.getAbsolutePath()+File.separator+"product_image"+File.separator+file.getOriginalFilename());
+				System.out.println("File save Path :"+path);
+				Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null; //image copy failed -> abort the update instead of saving a broken image name
 			}
-			
-			return updatedProduct;
 		}
-		return null;
+		
+		Product updatedProduct = productRepository.save(dbProductById);
+		return updatedProduct;
 	}
 
 	@Override

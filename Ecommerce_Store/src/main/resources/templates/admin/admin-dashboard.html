@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-	th:replace="~{base::layout(~{::section})}">
+	th:replace="~{admin-base::layout(~{::section})}">
 <head>
 <meta charset="UTF-8">
 <title>Admin | E-Store</title>
@@ -75,7 +75,7 @@
 				</div>
 				
 				<div class="col-md-4 mt-3">
-					<a href="#" class="text-decoration-none">
+					<a href="/admin/get-all-admins" class="text-decoration-none">
 						<div class="card custom-card-shadow">
 							<div class="card-body text-center text-primary">
 								<i class="fa-solid fa-user-tie fa-3x"></i>

@@ -106,6 +106,12 @@ public class HomeViewController {
 		return "login";
 	}
 	
+	@GetMapping("/admin-login")
+	public String adminLogin() {
+		
+		return "admin-login";
+	}
+	
 	@GetMapping("/register")
 	public String register() {
 		

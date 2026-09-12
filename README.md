@@ -2,6 +2,17 @@
 
 The backend used **Spring Boot** for clean, structured code with a **service layer**, **Spring Data JPA** for efficient database operations using **MySQL**, and **Spring Security** to protect user data with **authentication** and **role-based authorization**. Optimized with **Lombok** to reduce boilerplate code, this project is packaged as a **WAR** file for easy deployment on any servlet container, like **Apache Tomcat**.
 
+# Deploy to Render (free)
+
+This repo is ready to deploy on [Render](https://render.com) with a managed **PostgreSQL** database (Render does not offer MySQL hosting; the app uses Postgres in the cloud and MySQL locally).
+
+1. Push this repo to your GitHub account.
+2. On [dashboard.render.com](https://dashboard.render.com): **New → Blueprint**, select this repository, and Render will read `render.yaml` (web service + free Postgres DB) automatically.
+3. When prompted, fill in the secret env vars: `RAZORPAY_KEY_SECRET` (and `MAIL_USERNAME` / `MAIL_PASSWORD` if you want password-reset emails).
+4. Deploy — the first build takes a few minutes (Maven build inside Docker).
+
+Local development keeps working exactly as before on MySQL: credentials live in `src/main/resources/application-local.properties` (gitignored).
+
 # Features
   - **Spring Boot MVC Architecture:** This project follows a well-organized architecture with Service, Repository, and Controller layers to ensure clean code, easy maintenance, and scalability.
   - **Frontend Technologies:**

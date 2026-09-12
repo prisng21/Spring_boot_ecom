@@ -3,42 +3,15 @@
 	th:replace="~{admin-base::layout(~{::section})}">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Admin | E-Store</title>
 </head>
 <body>
 	<section>
 		<div class="container-fluid p-5">
-			
-			
 			<div class="row">
-				<div class="col-md-4">
-					<a href="#" class="btn btn-danger mb-3">Add User</a>
-				</div>
-			</div>
-			
-			<div class="row">
-				<!-- <div class="col-md-4">
-					<div class="card custom-card-shadow">
-						<div class="card-header text-center">
-							<p class="fs-4">Add Category</p>
-							<th:block th:if="${session.successMsg}">
-								<p class="text-success fw-bold text-center mt-2">[[${session.successMsg}]]</p>
-								<th:block th:text="${@commonServiceImpl.removeSessionMessage()}"></th:block>
-							</th:block>
-							<th:block th:if="${session.errorMsg}">
-								<p class="text-danger fw-bold text-center mt-2">[[${session.errorMsg}]]</p>
-								<th:block th:text="${@commonServiceImpl.removeSessionMessage()}"></th:block>
-							</th:block>
-
-						</div>
-
-						
-					</div>
-				</div> -->
-
 				<div class="col-md-12">
 					<div class="card custom-card-shadow">
-						<div class="card-header text-center fs-4">List of Users</div>
+						<div class="card-header text-center fs-4">List of Admins</div>
 
 						<th:block th:if="${session.successMsg}">
 							<p class="text-success fw-bold text-center mt-2">[[${session.successMsg}]]</p>
@@ -65,7 +38,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr th:each="user, count : ${allUsers}">
+									<tr th:each="user, count : ${allAdminUsers}">
 										<th scope="row">[[${count.count}]]</th>
 										<td><img th:src="@{'/img/profile_img/'+${user.profileImage}}" width="70px;" height="70px;"></td>
 										<td>[[${user.name}]]</td>
@@ -73,15 +46,12 @@
 										<td>[[${user.mobile}]]</td>
 										<td>[[${user.address+' ,'+user.city+' ,'+user.state+' , '+user.pinCode}]]</td>
 										<td>[[${user.isEnable}]]</td>
-										<td>[[${formattedDateTimeCreatedAt}]]</td>
+										<td>[[${#temporals.format(user.createdAt, 'dd-MM-yyyy HH:mm:ss')}]]</td>
 										<td>
-										<!-- th:href="@{'/admin/edit-category/'+${category.id}}" -->  
-										&nbsp; <a th:href="@{'/admin/edit-user-status?status=true&id='+${user.id}}"  class="btn btn-success btn" onclick="return confirm('Are you sure want to Active this User?');"><i class="fas fa-user-check"></i> Active</a>&nbsp; &nbsp; 
-										<a th:href="@{'/admin/edit-user-status?status=false&id='+${user.id}}" class="btn btn-danger btn" onclick="return confirm('Are you sure want to Inactive this User?');"><i class="fas fa-user-times"></i> InActive</a>
-										
+											<a th:href="@{'/admin/edit-user-status?status=true&id='+${user.id}}" class="btn btn-success btn" onclick="return confirm('Are you sure want to Active this Admin?');"><i class="fas fa-user-check"></i> Active</a>&nbsp; &nbsp;
+											<a th:href="@{'/admin/edit-user-status?status=false&id='+${user.id}}" class="btn btn-danger btn" onclick="return confirm('Are you sure want to Inactive this Admin?');"><i class="fas fa-user-times"></i> InActive</a>
 										</td>
 									</tr>
-									
 								</tbody>
 							</table>
 						</div>

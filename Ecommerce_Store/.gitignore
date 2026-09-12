@@ -33,7 +33,7 @@ build/
 ### VS Code ###
 .vscode/
 
-# Ignore application.properties file
-src/main/resources/application.properties
-src/main/resources/application.properties
-src/main/resources/application.properties
+### Local secrets - never commit these ###
+src/main/resources/application-local.properties
+src/main/resources/application.properties.bak
+*.log

@@ -43,6 +43,11 @@ public class ProductOrder {
 	
 	private String paymentType;
 	
+	// Razorpay payment tracking
+	private String razorpayOrderId;
+	private String razorpayPaymentId;
+	private String paymentStatus; // PENDING, PAID, FAILED
+	
 	@OneToOne(cascade = CascadeType.ALL)
 	private OrderAddress orderAddress;
 	

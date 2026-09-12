@@ -7,4 +7,6 @@ import com.mdtalalwasim.ecommerce.entity.ProductOrder;
 @Repository
 public interface ProductOrderRepository extends JpaRepository<ProductOrder, Long>{
 
+	ProductOrder findByRazorpayOrderId(String razorpayOrderId);
+
 }

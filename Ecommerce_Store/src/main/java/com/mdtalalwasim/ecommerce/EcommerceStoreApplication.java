@@ -2,13 +2,19 @@ package com.mdtalalwasim.ecommerce;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 @SpringBootApplication
-public class EcommerceStoreApplication {
+public class EcommerceStoreApplication extends SpringBootServletInitializer {
+
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+		return builder.sources(EcommerceStoreApplication.class);
+	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(EcommerceStoreApplication.class, args);
-		System.out.println("Welcome");
 	}
 
 }
