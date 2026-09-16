@@ -51,7 +51,7 @@ Local development keeps working exactly as before on MySQL: credentials live in 
 # Installation
    **1. Clone the repository:**
 ```bash
-git clone https://github.com/mdtalalwasim/Ecommerce_Store.git
+git clone https://github.com/prisng21/Spring_boot_ecom.git
 ```
    **2. Navigate to the project directory:**
 ```bash
